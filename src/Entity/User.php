@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -30,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    public ?string $plainPassword = null;
+    private ?string $plainPassword = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstname = null;
@@ -116,4 +117,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getPlainpassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainpassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        // To force doctrine to send persist / update events
+        // be sure change one column
+        $this->setUpdatedAt(new DateTime());
+
+        return $this;
+    }
+
 }
