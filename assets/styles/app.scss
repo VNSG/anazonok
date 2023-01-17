@@ -1,5 +1,15 @@
+// Own variables and BS overwrite
+@import "variables.scss";
+// BS Libs
+@import "~bootstrap/scss/bootstrap";
 
+// My Libs
 
-body {
-    background-color: rgb(212, 28, 28);
+@import "components/grid.scss";
+
+a:hover {
+    background-color: rgba(4, 216, 54, 0.083);
+}
+a:hover.sample {
+    background-color: rgb(175, 9, 9);
 }
