@@ -38,7 +38,12 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductImage::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $productImages;
 
-    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $manual = null;
+
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'manual')]
+    private ?File $manualFile = null;
 
     public function __construct()
     {
@@ -126,5 +131,42 @@ class Product
         }
 
         return $this;
+    }
+
+    public function getManual(): ?string
+    {
+        return $this->manual;
+    }
+
+    public function setManual(?string $Manuals): self
+    {
+        $this->manual = $Manuals;
+
+        return $this;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $manualFile
+     */
+    public function setManualFile(?File $manualFile = null): void
+    {
+        $this->manualFile = $manualFile;
+
+        if (null !== $manualFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getManualFile(): ?File
+    {
+        return $this->manualFile;
     }
 }

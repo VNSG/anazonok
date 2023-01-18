@@ -14,3 +14,8 @@ vich_uploader:
             uri_prefix: /images/products
             upload_destination: '%kernel.project_dir%/public/images/products'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        manuals:
+            uri_prefix: /docs/manuals
+            upload_destination: '%kernel.project_dir%/public/docs/manuals'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
