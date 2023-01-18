@@ -1,5 +1,14 @@
-{% if vich_uploader_asset(entity.instance, field.property, entity.fqcn) %}
+{# {% if vich_uploader_asset(entity.instance, field.property, entity.fqcn) %}
     <img src="{{ vich_uploader_asset(entity.instance, field.property, entity.fqcn)|imagine_filter('admin_thumbnail') }}">Download
+{% else %}
+    <span class="badge badge-secondary">
+        Empty
+    </span>
+{% endif %} #}
+{% if vich_uploader_asset(entity.instance, field.property, entity.fqcn) %}
+    <a href="{{ vich_uploader_asset(entity.instance, field.property, entity.fqcn) }}" download>
+        Download
+    </a>
 {% else %}
     <span class="badge badge-secondary">
         Empty

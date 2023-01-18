@@ -11,6 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use App\Admin\Field\VichImageField;
+
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -30,5 +32,6 @@ class ProductCrudController extends AbstractCrudController
         yield FormField::addTab('Images');
         yield CollectionField::new('productImages')
                 ->setEntryType(ProductImageType::class);
+
     }
 }
