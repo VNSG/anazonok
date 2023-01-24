@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}detail du produit
+{% endblock %}
+{% block body %}
+	{% for product in products %}
+		<div>
+			<h2>{{ product.name}}</h2>
+			{% if product.productImages | length > 0 %}
+				<img src="{{ asset('product-images/' ~ product.productImages[0].path) }}" width="300"/>
+			{% endif %}
+			<span>{{ product.price |format_currency('EUR', locale='fr') }}</span>
+		</div>
+	{% else %}
+		Aucun produit dans l'Univers
+		{{ category.title }}.
+	{% endfor %}
+
+{% endblock %}

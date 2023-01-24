@@ -41,11 +41,21 @@ class ProductController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Votre message est bien envoyé!!!');
-
+            return $this->redirectToRoute('app_product_detail'); 
         }
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'reviewForm' => $reviewForm->createView()
         ]);
+
     }
+    #[Route('/product', name: 'app_product_detail')]
+    public function detail(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/detail.html.twig',[
+            'products' => $productRepository->findAll(),
+        ]);
+    }
+
+
 }

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
-#[UniqueEntity(['email'])]
+// #[UniqueEntity(['email'])]
 class Review
 {
     //use TimestampableEntity;
@@ -22,6 +22,10 @@ class Review
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Votre commentaire doit contenir au maximum {{ limit }} caractères',
+    )]
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
@@ -30,8 +34,14 @@ class Review
     ])]
     #[Assert\NotBlank()]
     private ?string $email = null;
-
+        
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 3,
+        max: 10,
+        minMessage: 'Votre pseudo doit contenir au minimum {{ limit }} caractères',
+        maxMessage: 'Votre pseudo doit contenir au maximum {{ limit }} caractères',
+    )]
     private ?string $nickname = null;
 
     #[ORM\Column(nullable: true)]
