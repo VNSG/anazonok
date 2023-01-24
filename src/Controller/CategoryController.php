@@ -24,6 +24,7 @@ class CategoryController extends AbstractController
         if (!$category) {
             throw $this-> createNotFoundException();
         }
+        
         return $this->render('category/show.html.twig', [
             'category' => $category,
         ]);
