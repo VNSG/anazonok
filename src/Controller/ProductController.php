@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\CategoryRepository;
 use App\Entity\Review;
 use App\Form\ReviewType;
 use App\Repository\ProductRepository;
@@ -41,7 +41,7 @@ class ProductController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Votre message est bien envoyé!!!');
-            return $this->redirectToRoute('app_product_detail'); 
+            return $this->redirectToRoute('app_products'); 
         }
         return $this->render('product/show.html.twig', [
             'product' => $product,

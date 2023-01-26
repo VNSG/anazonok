@@ -51,11 +51,15 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class, orphanRemoval: true)]
     private Collection $reviews;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Mark::class, orphanRemoval: true)]
+    private Collection $marks;
+
     
     public function __construct()
     {
         $this->productImages = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->marks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,5 +215,35 @@ class Product
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getMarks(): Collection
+    {
+        return $this->marks;
+    }
+
+    public function addMark(Mark $mark): self
+    {
+        if (!$this->marks->contains($mark)) {
+            $this->marks->add($mark);
+            $mark->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMark(Mark $mark): self
+    {
+        if ($this->marks->removeElement($mark)) {
+            // set the owning side to null (unless already changed)
+            if ($mark->getProduct() === $this) {
+                $mark->setProduct(null);
+            }
+        }
+
+        return $this;
     }
 }

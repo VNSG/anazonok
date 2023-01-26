@@ -8,23 +8,29 @@ use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture
 {
-    public const CATEGORY_PELUCHES = 'CATEGORY_PELUCHES';
+    public const CATEGORY_SUB_CATEGORY = 'CATEGORY_SUB_CATEGORY';
 
     public function load(ObjectManager $manager): void
     {
-        $jouets = new Category();
-        $jouets->setTitle('Jouets');
-        $manager->persist($jouets);
+        $mainCategory = new Category();
+        $mainCategory->setTitle('Main Category');
+        $manager->persist($mainCategory);
 
         $category = new Category();
-        $category->setTitle('Peluches');
-        $category->setParent($jouets);
+        $category->setTitle('Sous Category');
+        $category->setParent($mainCategory);
+        $category->setDescription('Lorem');
         $manager->persist($category);
-        $this->addReference(self::CATEGORY_PELUCHES, $category);
+        $this->addReference(self::CATEGORY_SUB_CATEGORY, $category);
 
-        $category = new Category();
-        $category->setTitle('Balades');
-        $manager->persist($category);
+        for ($i=1; $i <=50 ; $i++) { 
+
+            $category = new Category();
+            $category->setTitle('Sous Category'.$i);
+            $category->setParent($mainCategory);
+            $category->setDescription('Lorem');
+            $manager->persist($category);
+        }
 
         $manager->flush();
     }

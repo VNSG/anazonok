@@ -1,0 +1,11 @@
+
+
+	<div class="row card mt-10" style="width: 18rem;">
+		<img src="https://place-hold.it/300x300" width="300" / class="card-img-top" alt="Image de" {{ product.name}}>
+		<div class="card-body">
+			<h2 class="card-title h5 text-dark">{{ product.name }}</h2>
+			<p class="card-text">{{ product.description | raw }}</p>
+			<a href="{{ path('app_product', {id: product.id }) }}" class="btn btn-primary">Voir</a>
+		</div>
+	</div>
+

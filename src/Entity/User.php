@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -44,8 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstname = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Mark::class, orphanRemoval: true)]
+    private Collection $marks;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class)]
+    private Collection $reviews;
+
     public function __construct()
     {
+        $this->marks = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +152,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // To force doctrine to send persist / update events
         // be sure change one column
         $this->setUpdatedAt(new DateTime());
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getMarks(): Collection
+    {
+        return $this->marks;
+    }
+
+    public function addMark(Mark $mark): self
+    {
+        if (!$this->marks->contains($mark)) {
+            $this->marks->add($mark);
+            $mark->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMark(Mark $mark): self
+    {
+        if ($this->marks->removeElement($mark)) {
+            // set the owning side to null (unless already changed)
+            if ($mark->getUser() === $this) {
+                $mark->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
 
         return $this;
     }

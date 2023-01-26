@@ -21,23 +21,25 @@ class ReviewType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' =>'Votre e-mail',
                 'attr' => [
-                    'class' => 'col-2 form-control'
+                    'class' => 'container row row-cols-2 form-control'
                 ]
             ])
             ->add('nickname', TextType::class, [
                 'label' =>'Votre pseudo',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'col-md-6 form-control'
                 ]
             ])
             ->add('content', TextType::class, [
                 'label' =>'Votre commentaire',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'container col-2 form-control'
                 ]
             ])
 
-            ->add('product',)
+            ->add('product', HiddenType::class, [
+                'mapped' => false
+            ])
             ->add('parentid', HiddenType::class, [
                 'mapped' => false
             ])

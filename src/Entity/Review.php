@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+// use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 // #[UniqueEntity(['email'])]
 class Review
 {
-    //use TimestampableEntity;
+    // use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -45,7 +46,7 @@ class Review
     private ?string $nickname = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,6 +57,9 @@ class Review
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private Collection $replies;
+
+    #[ORM\ManyToOne(inversedBy: 'reviews')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -105,12 +109,12 @@ class Review
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -165,6 +169,18 @@ class Review
                 $reply->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
