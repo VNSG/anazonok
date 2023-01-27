@@ -39,7 +39,7 @@ class Review
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         min: 3,
-        max: 10,
+        max: 30,
         minMessage: 'Votre pseudo doit contenir au minimum {{ limit }} caractères',
         maxMessage: 'Votre pseudo doit contenir au maximum {{ limit }} caractères',
     )]

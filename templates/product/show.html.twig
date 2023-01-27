@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}L'Univers
-	{{ product.name }}
+	{# {{ product.name }} #}
 {% endblock %}
 {% block body %}
 	<div class="mb-3">
 		<div class="mb-3">
-			<h2>{{ product.name }}</h2>
+			<h2>{# {{ product.name }} #}</h2>
 		</div>
-        {% include "_parts/productCard.html.twig" %}
+        {% include "_parts/productDetailsCard.html.twig" %}
 
 		<div class="mb-3">
 			{% block alert %}{% endblock %}
@@ -30,6 +30,17 @@
 					Vous devez être connecté pour déposer un commentaire
 					<a href="{{ path('app_login')}}">login</a>
 				{% endif %}
+				<ul class="comment-list mt-5">
+					{% for product in product %}
+						<li class="comment">
+							<div class="form-control">
+								<h3> {{product.nickname}} </h3>
+								<p>{{product.email}}</p>
+								<p>{{product.content}}</p>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</div>
 	{% endblock %}

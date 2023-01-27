@@ -1,10 +1,10 @@
 <div class"container">
 	<div class="col-3 ml-23 card">
 		<div class= style="width: 18rem;">
-			<img src="https://place-hold.it/300x300" width="300" / class="card-img-top" alt="Image de" {{ product.name}}>
+			<img src="https://place-hold.it/300x300" width="300" / class="card-img-top" alt="Image de"{# {{product.name}} #}>
 			<div class="card-body">
-				<h2 class="card-title h5 text-dark">{{ product.name }}</h2>
-				<p class="card-text">{{ product.description | raw }}</p>
+				<h2 class="card-title h5 text-dark">{# {{ product.name }} #}</h2>
+				<p class="card-text">{# {{ product.description | raw }} #}</p>
 			</div>
 		</div>
 	</div>
