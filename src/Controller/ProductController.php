@@ -11,15 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ProductController extends AbstractController
 {
     #[Route('/products', name: 'app_products')]
-    public function list(ProductRepository $productRepository): Response
+    public function list(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $pagination = $paginator->paginate(
+            $productRepository->createQueryBuilder('p'), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
         return $this->render('product/list.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $pagination,
         ]);
     }
 

@@ -5,6 +5,7 @@
 
 {% block body %}
 	<h1>Retrouvez tous nos univers</h1>
+
 	<div class="row">
 		{% for category in categories %}
 			<div class="col-3">
@@ -17,5 +18,5 @@
 
 	<div class="navigation mt-5">
     {{ knp_pagination_render(categories) }}
-</div>
+	</div>
 {% endblock %}
