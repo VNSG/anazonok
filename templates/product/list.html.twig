@@ -7,9 +7,10 @@
     <div class= "container">
         <div class="row">
                 {% for product in products %}
-                <ul class="flex-items">
+                {% include "_parts/productCard.html.twig" %}
+                {# <ul class="flex-items">
                     <li><a href="{{path('app_product', { id: product.id}) }}">{{ product.name }}</a></li>
-                </ul>
+                </ul> #}
                 {% endfor %}
             
         </div>
