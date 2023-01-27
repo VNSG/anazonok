@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lise des catégories{% endblock %}
+{% block title %}Lise des catégories
+{% endblock %}
 
 {% block body %}
-    <h1>Retrouvez tous nos univers</h1>
-    
-    <ul>
-        {% for category in categories %}
-            <li><a href="{{path('app_category', { id: category.id}) }}">{{ category.title }}</a></li>
-        {% endfor %}
-    </ul>
+	<h1>Retrouvez tous nos univers</h1>
+
+	<div class="row">
+		{% for category in categories %}
+			<div class="col-3">
+				<h2>{{ category.title }}</h2>
+				<p>{{ category.description }}</p>
+				<a href="{{path('app_category', { id: category.id}) }}">Voir</a>
+            </div>
+			{% endfor %}
+	</div>
+
+	<div class="navigation mt-5">
+    {{ knp_pagination_render(categories) }}
+	</div>
 {% endblock %}

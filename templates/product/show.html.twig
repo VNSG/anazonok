@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L'Univers
+	{# {{ product.name }} #}
+{% endblock %}
+{% block body %}
+	<div class="mb-3">
+		<div class="mb-3">
+			<h2>{# {{ product.name }} #}</h2>
+		</div>
+        {% include "_parts/productDetailsCard.html.twig" %}
+
+		<div class="mb-3">
+			{% block alert %}{% endblock %}
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			<h2>
+				Ajout d'un commentaire</h2>
+			<div class="comment-form-wrap pt-5">
+				{% if app.user %}
+					{{ form_start(reviewForm) }}
+					{{ form_widget(reviewForm) }}
+					{# <button type="submit" class="btn btn-primary">Create!</button> #}
+					{{ form_end(reviewForm) }}
+					{# {{form(reviewForm)}} #}
+				{% else %}
+					Vous devez être connecté pour déposer un commentaire
+					<a href="{{ path('app_login')}}">login</a>
+				{% endif %}
+				<ul class="comment-list mt-5">
+					{% for product in product %}
+						<li class="comment">
+							<div class="form-control">
+								<h3> {{product.nickname}} </h3>
+								<p>{{product.email}}</p>
+								<p>{{product.content}}</p>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	{% endblock %}

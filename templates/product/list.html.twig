@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lise des produits{% endblock %}
+
+{% block body %}
+    <h1>Retrouvez tous nos produits</h1>
+    <div class= "container">
+        <div class="row">
+                {% for product in products %}
+                {% include "_parts/productCard.html.twig" %}
+                {# <ul class="flex-items">
+                    <li><a href="{{path('app_product', { id: product.id}) }}">{{ product.name }}</a></li>
+                </ul> #}
+                {% endfor %}
+            
+        </div>
+    </div>
+    <div class="navigation mt-5">
+    {{ knp_pagination_render(products) }}
+	</div>
+{% endblock %}
